@@ -75,7 +75,3 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 }
 
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Se
