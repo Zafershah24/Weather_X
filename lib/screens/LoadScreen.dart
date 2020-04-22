@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/location.dart';
-import 'package:http/http.dart';
+import 'package:weatherx/services/network.dart';
+
+import 'package:weatherx/utilities/constants.dart';
+import 'locationscreen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -10,37 +14,58 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
+  double lat;
+  double long;
+
 
   @override
   void initState() {
 
     super.initState();
-
-
-
-  }
-  void getdata()async
-  {
-   Response response= await get('https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02');
-    print(response.body);
+ getLocationData();
 
 
   }
-  void getLocation() async{
+
+  void getLocationData() async{
     Location location = new Location();
     await location.getCurrentLocation();
-    print(location.longitude);
-    print(location.latitude);
+     long = location.longitude;
+   lat =location.latitude;
+    NetworkHelper networkhelper =NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$kAPI&units=metric');
+
+  var weatherData=await networkhelper.getData();
+
+  Navigator.push(context, MaterialPageRoute(builder: (context)
+    {
+      return LocationScreen(locationweather: weatherData,);
+
+    }
+    ));
+
+
   }
+
+
+
+
+
+
 
 
 
   @override
   Widget build(BuildContext context)
   {
-    getdata();
-    return Scaffold(
 
-    );
+    return Scaffold(
+      body: Center(
+        child:  SpinKitCubeGrid(
+        color: Colors.teal,
+        size: 90.0,
+      ),
+
+
+    ),);
   }
 }
