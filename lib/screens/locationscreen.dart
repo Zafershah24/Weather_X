@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weatherx/utilities/constants.dart';
 import 'package:weatherx/services/weather.dart';
+import 'city_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LocationScreen extends StatefulWidget {
-
   LocationScreen({this.locationweather});
   final locationweather;
   @override
@@ -16,93 +17,210 @@ class _LocationScreenState extends State<LocationScreen> {
   int temperature;
   String weathericon;
   String displayText;
+  int temp_min;
+  int temp_max;
+  String subtxt;
 
   String cityname;
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     updateUI(widget.locationweather);
   }
 
-  void updateUI(dynamic weatherData){
-  setState(() {
+  void updateUI(dynamic weatherData) {
+    setState(() {
+      if (weatherData == null) {
+        temperature = 0;
+        weathericon = 'Error in Fetching Data';
+        cityname = 'the app';
+        return;
+      }
+      double temp = weatherData['main']['temp'];
+      temperature = temp.toInt();
+      temp_min = weatherData['main']['temp_min'].toInt();
+      temp_max = weatherData['main']['temp_max'].toInt();
+      displayText = weather.getMessage(temperature);
 
-    double temp = weatherData['main']['temp'];
-    temperature=temp.toInt();
-    displayText = weather.getMessage(temperature);
-
-var condition = weatherData['weather'][0]['id'];
-   weathericon= weather.getWeatherIcon(condition);
-
- cityname = weatherData['name'];
-  });
+      var condition = weatherData['weather'][0]['id'];
+      weathericon = weather.getWeatherIcon(condition);
+      subtxt = weather.subtext(condition);
+      cityname = weatherData['name'];
+    });
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+//      backgroundColor: Colors.white,
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('images/location_background.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8), BlendMode.dstATop),
-          ),
-        ),
-        constraints: BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.near_me,
-                      size: 50.0,
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.location_city,
-                      size: 50.0,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 15.0),
+              Container(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      '$temperature°',
-                      style: kTempTextStyle,
+
+                    FlatButton(
+                      onPressed: () async {
+                        var weatherData = await weather.locationWeather();
+                        updateUI(weatherData);
+                      },
+                      child: Icon(
+                        FontAwesomeIcons.locationArrow,
+                        color: Colors.white,
+                      ),
                     ),
-                    Text(
-                      weathericon,
-                      style: kConditionTextStyle,
+                    Center(
+                      child: Expanded(
+                        flex: 1,
+                        //margin: EdgeInsets.only(bottom: 50),
+                        child: TyperAnimatedTextKit(
+                            text: [
+                              "Created by Zafer",
+                            ],
+                            textStyle: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 25.0,
+                            ),
+                            textAlign: TextAlign.start,
+                            alignment:
+                            AlignmentDirectional.topStart // or Alignment.topLeft
+                        ),
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: () async {
+                        var typedname = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return CityScreen();
+                            },
+                          ),
+                        );
+                        if (typedname != null) {
+                          var weatherdata =
+                              await weather.cityWeather(typedname);
+                          updateUI(weatherdata);
+                        }
+                      },
+                      child: Icon(
+                        FontAwesomeIcons.city,
+                        size: 28.0,
+                        color: Colors.redAccent,
+                      ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text(
-                  '$displayText in $cityname',
-                  textAlign: TextAlign.right,
-                  style: kMessageTextStyle,
+                  padding: EdgeInsets.fromLTRB(50, 50, 50, 0),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        child: Text(
+                          cityname,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 35,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+
+              Expanded(
+                flex: 9,
+                child: Container(
+
+
+
+                  margin: EdgeInsets.fromLTRB(50, 30, 50, 80),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            '$temperature°',
+                            style: TextStyle(
+                                fontSize: 75,
+                                fontWeight: FontWeight.bold,
+
+                                ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            subtxt,
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 0, 0, 50),
+                        child: Container(
+                          child: Text(
+                            "$displayText in $cityname",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[500],
+                                ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          child: Divider(
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(20, 0, 0, 38),
+                              child: Text(
+                                '$temp_min°-$temp_max°',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey[500],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 100,),
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.fromLTRB(20, 0, 0, 38),
+                            //padding: const EdgeInsets.all(8.0),
+                            child: Text(weathericon,style: TextStyle(fontSize: 30),),
+                          )),
+                        ],
+                      )
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color:  Color(0xFF0C0C0C),
+                  ),
                 ),
               ),
+
             ],
           ),
         ),
@@ -111,3 +229,4 @@ var condition = weatherData['weather'][0]['id'];
   }
 }
 
+//Color(0xFF0C0C0C)

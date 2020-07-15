@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import '../services/location.dart';
-import 'package:weatherx/services/network.dart';
 
-import 'package:weatherx/utilities/constants.dart';
+
+
+import 'package:weatherx/services/weather.dart';
 import 'locationscreen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -14,8 +13,7 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
-  double lat;
-  double long;
+
 
 
   @override
@@ -28,15 +26,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocationData() async{
-    Location location = new Location();
-    await location.getCurrentLocation();
-     long = location.longitude;
-   lat =location.latitude;
-    NetworkHelper networkhelper =NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$kAPI&units=metric');
+    WeatherModel weatherModel =WeatherModel();
+    var weatherData=await weatherModel.locationWeather();
 
-  var weatherData=await networkhelper.getData();
-
-  Navigator.push(context, MaterialPageRoute(builder: (context)
+    Navigator.push(context, MaterialPageRoute(builder: (context)
     {
       return LocationScreen(locationweather: weatherData,);
 
@@ -46,26 +39,30 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   }
 
-
-
-
-
-
-
-
-
   @override
   Widget build(BuildContext context)
   {
 
     return Scaffold(
-      body: Center(
-        child:  SpinKitCubeGrid(
-        color: Colors.teal,
-        size: 90.0,
-      ),
-
-
-    ),);
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: SpinKitCubeGrid(
+            color: Colors.pinkAccent,
+            size: 100.0,
+            ),
+          ),
+          Container(
+            child: Text(
+              "WeatherX",
+              style: TextStyle(
+                fontSize: 55,
+                color: Colors.pinkAccent,
+              ),
+            ),
+          ),
+        ],
+      ),);
   }
 }

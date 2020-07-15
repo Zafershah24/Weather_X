@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherx/utilities/constants.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class CityScreen extends StatefulWidget {
   @override
@@ -7,13 +8,14 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+ String Cityname;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/city_background.jpg'),
+            image: AssetImage('images/pic.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -24,22 +26,37 @@ class _CityScreenState extends State<CityScreen> {
               Align(
                 alignment: Alignment.topLeft,
                 child: FlatButton(
-                  onPressed: () {},
+                  onPressed: () {Navigator.pop(context);},
                   child: Icon(
                     Icons.arrow_back_ios,
+                    color:Colors.white,
                     size: 50.0,
                   ),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
+                  onChanged: (value){
+                    Cityname=value;
+                  },
+                  decoration: kTextfiedstyle,
+                ),
               ),
               FlatButton(
-                onPressed: () {},
-                child: Text(
-                  'Get Weather',
-                  style: kButtonTextStyle,
+                onPressed: () {Navigator.pop(context,Cityname);},
+                child: TyperAnimatedTextKit(
+                    text: [
+                      "Get Weather ",
+                      "Of Different City",
+                    ],
+                    textStyle: TextStyle(
+                        fontSize: 30.0,
+                        color: Colors.redAccent,
+                    ),
+                    textAlign: TextAlign.start,
+                    alignment: AlignmentDirectional.topStart // or Alignment.topLeft
                 ),
               ),
             ],
@@ -49,3 +66,8 @@ class _CityScreenState extends State<CityScreen> {
     );
   }
 }
+
+//Text(
+//'Get Weather',
+//style: kButtonTextStyle,
+//),
