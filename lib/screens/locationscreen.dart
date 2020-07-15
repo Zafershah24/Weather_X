@@ -63,34 +63,8 @@ class _LocationScreenState extends State<LocationScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
 
-                    FlatButton(
-                      onPressed: () async {
-                        var weatherData = await weather.locationWeather();
-                        updateUI(weatherData);
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.locationArrow,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Center(
-                      child: Expanded(
-                        flex: 1,
-                        //margin: EdgeInsets.only(bottom: 50),
-                        child: TyperAnimatedTextKit(
-                            text: [
-                              "Created by Zafer",
-                            ],
-                            textStyle: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 25.0,
-                            ),
-                            textAlign: TextAlign.start,
-                            alignment:
-                            AlignmentDirectional.topStart // or Alignment.topLeft
-                        ),
-                      ),
-                    ),
+
+
                     FlatButton(
                       onPressed: () async {
                         var typedname = await Navigator.push(
@@ -110,6 +84,18 @@ class _LocationScreenState extends State<LocationScreen> {
                       child: Icon(
                         FontAwesomeIcons.city,
                         size: 28.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: () async {
+                        var weatherData = await weather.locationWeather();
+                        updateUI(weatherData);
+                      },
+                      child: Icon(
+
+                        Icons.gps_fixed,
+                        size: 30,
                         color: Colors.redAccent,
                       ),
                     ),
@@ -218,9 +204,26 @@ class _LocationScreenState extends State<LocationScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color:  Color(0xFF0C0C0C),
                   ),
+
+                ),
+
+              ),
+              Expanded(
+                flex: 1,
+                //margin: EdgeInsets.only(bottom: 50),
+                child: TyperAnimatedTextKit(
+                    text: [
+                      "Created by Zafer",
+                    ],
+                    textStyle: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 25.0,
+                    ),
+                    textAlign: TextAlign.start,
+                    alignment:
+                    AlignmentDirectional.topStart // or Alignment.topLeft
                 ),
               ),
-
             ],
           ),
         ),

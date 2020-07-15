@@ -49,7 +49,6 @@ class _CityScreenState extends State<CityScreen> {
                 child: TyperAnimatedTextKit(
                     text: [
                       "Get Weather ",
-                      "Of Different City",
                     ],
                     textStyle: TextStyle(
                         fontSize: 30.0,

@@ -49,7 +49,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         children: <Widget>[
           Center(
             child: SpinKitCubeGrid(
-            color: Colors.pinkAccent,
+            color: Colors.redAccent,
             size: 100.0,
             ),
           ),
@@ -58,7 +58,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               "WeatherX",
               style: TextStyle(
                 fontSize: 55,
-                color: Colors.pinkAccent,
+                color: Colors.redAccent,
               ),
             ),
           ),
