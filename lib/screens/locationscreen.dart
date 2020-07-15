@@ -13,26 +13,6 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weather = WeatherModel();
 
-
-  Future<void> ackAlert(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ERROR'),
-          content: const Text("Something's not Right with your Connection\nPLease try later"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
   int temperature;
   String weathericon;
   String displayText;
@@ -47,9 +27,6 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weatherData){
   setState(() {
-  if (weatherData==null){
-    ackAlert(context);
-  }
 
     double temp = weatherData['main']['temp'];
     temperature=temp.toInt();
