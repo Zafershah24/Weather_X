@@ -46,17 +46,7 @@ class _CityScreenState extends State<CityScreen> {
               ),
               FlatButton(
                 onPressed: () {Navigator.pop(context,Cityname);},
-                child: TyperAnimatedTextKit(
-                    text: [
-                      "Get Weather ",
-                    ],
-                    textStyle: TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.redAccent,
-                    ),
-                    textAlign: TextAlign.start,
-                    alignment: AlignmentDirectional.topStart // or Alignment.topLeft
-                ),
+                child: Text('Get Weather',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w200),)
               ),
             ],
           ),

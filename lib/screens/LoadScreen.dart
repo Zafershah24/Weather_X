@@ -53,6 +53,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             size: 100.0,
             ),
           ),
+          SizedBox(height: 30,),
           Container(
             child: Text(
               "WeatherX",
