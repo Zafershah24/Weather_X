@@ -46,7 +46,7 @@ class _CityScreenState extends State<CityScreen> {
               ),
               FlatButton(
                 onPressed: () {Navigator.pop(context,Cityname);},
-                child: Text('Get Weather',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w200),)
+                child: Text('Get Weather',style: TextStyle(fontSize: 35,fontWeight: FontWeight.w800),)
               ),
             ],
           ),
