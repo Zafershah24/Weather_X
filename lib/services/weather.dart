@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+
 import '../services/location.dart';
 import 'package:weatherx/services/network.dart';
 import 'package:weatherx/utilities/constants.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -36,24 +39,24 @@ class WeatherModel {
       return 'Bring a 🧥 & ☂ (just in case)';
     }
   }
-  String getWeatherIcon(int condition){
+ Icon getWeatherIcon(int condition){
     if (condition < 300) {
-      return '    🌩';
+      return Icon(WeatherIcons.thunderstorm,color:Colors.red,);
     } else if (condition < 400) {
-      return '    🌧';
+      return Icon(WeatherIcons.rain_mix,color:Colors.red,);
     } else if (condition < 600) {
-      return '    ☔';
+      return Icon(WeatherIcons.rain,color:Colors.red,);
     } else if (condition < 700) {
-      return '    ☃';
+      return Icon(WeatherIcons.snowflake_cold,color:Colors.red,);
     } else if (condition < 800) {
 
-      return '    🌫';
+      return Icon(WeatherIcons.day_windy,color:Colors.red,);
     } else if (condition == 800) {
-      return '    ☀';
+      return Icon(WeatherIcons.day_sunny,color:Colors.red,);
     } else if (condition <= 804) {
-      return '    ☁';
+      return Icon(WeatherIcons.cloud,color:Colors.red,);
     } else
-    return '    🤷‍';
+    return null;
   }
   String subtext(int condition){
     if (condition < 300) {

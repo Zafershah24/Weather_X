@@ -3,6 +3,7 @@ import 'package:weatherx/services/weather.dart';
 import 'city_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class LocationScreen extends StatefulWidget {
   LocationScreen({this.locationweather});
@@ -15,7 +16,7 @@ class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weather = WeatherModel();
 
   int temp;
-  String weathericon;
+  Icon weathericon;
   String displayText;
   int temp_min;
   int temp_max;
@@ -35,7 +36,7 @@ class _LocationScreenState extends State<LocationScreen> {
     setState(() {
       if (weatherData == null) {
         temp = 0;
-        weathericon = 'Error in Fetching Data';
+        weathericon = Icon(Icons.error_outline);
         cityname = 'the app';
         return;
       }
@@ -136,6 +137,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
 
                     children: <Widget>[
+                      SizedBox(height: 10,),
                       Expanded(
                         flex: 2,
                         child: Padding(
@@ -163,12 +165,12 @@ class _LocationScreenState extends State<LocationScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 50),
+                        padding: EdgeInsets.fromLTRB(20, 0, 10, 50),
                         child: Container(
                           child: Text(
                             "$displayText in $cityname",
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 21,
                                 color: Colors.grey[500],
                                 ),
                           ),
@@ -184,6 +186,13 @@ class _LocationScreenState extends State<LocationScreen> {
                       Row(
                         children: <Widget>[
                           Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 38),
+                                //padding: const EdgeInsets.all(8.0),
+                                child: weathericon,
+                              )),
+                          SizedBox(width: 100,),
+                          Expanded(
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(20, 0, 0, 38),
                               child: Text(
@@ -195,13 +204,8 @@ class _LocationScreenState extends State<LocationScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 100,),
-                          Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.fromLTRB(20, 0, 0, 38),
-                            //padding: const EdgeInsets.all(8.0),
-                            child: Text(weathericon,style: TextStyle(fontSize: 30),),
-                          )),
+
+
                         ],
                       )
                     ],
