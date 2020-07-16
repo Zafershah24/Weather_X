@@ -14,13 +14,13 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weather = WeatherModel();
 
-  int temperature;
+  int temp;
   String weathericon;
   String displayText;
   int temp_min;
   int temp_max;
-  double temp_mn;
-  double temp_mx;
+//  double temp_mn;
+//  double temp_mx;
   String subtxt;
 
   String cityname;
@@ -34,18 +34,20 @@ class _LocationScreenState extends State<LocationScreen> {
   void updateUI(dynamic weatherData) {
     setState(() {
       if (weatherData == null) {
-        temperature = 0;
+        temp = 0;
         weathericon = 'Error in Fetching Data';
         cityname = 'the app';
         return;
       }
-      double temp = weatherData['main']['temp'];
-      temperature = temp.toInt();
-      temp_mn = weatherData['main']['temp_min'];
-      temp_min=temp_mn.toInt();
-      temp_mx = weatherData['main']['temp_max'];
-       temp_max=temp_mx.toInt();
-      displayText = weather.getMessage(temperature);
+       temp = weatherData['main']['temp'].toInt();
+
+      temp_min = (weatherData['main']['temp_min']).toInt();
+      temp_max =(weatherData['main']['temp_max']).toInt();
+//     double temp_mn = weatherData['main']['temp_min'];
+//      temp_min=temp_mn.toInt();
+//      double temp_mx = weatherData['main']['temp_max'];
+//       temp_max=temp_mx.toInt();
+      displayText = weather.getMessage(temp);
 
       var condition = weatherData['weather'][0]['id'];
       weathericon = weather.getWeatherIcon(condition);
@@ -139,7 +141,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 20),
                           child: Text(
-                            '$temperature°',
+                            '$temp°',
                             style: TextStyle(
                                 fontSize: 75,
                                 fontWeight: FontWeight.bold,
