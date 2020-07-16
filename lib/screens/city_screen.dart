@@ -12,6 +12,7 @@ class _CityScreenState extends State<CityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+//      backgroundColor: Colors.redAccent,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -46,7 +47,7 @@ class _CityScreenState extends State<CityScreen> {
               ),
               FlatButton(
                 onPressed: () {Navigator.pop(context,Cityname);},
-                child: Text('Get Weather',style: TextStyle(fontSize: 35,fontWeight: FontWeight.w800),)
+                child: Center(child: Text('Get Weather',style: TextStyle(fontSize: 45,fontWeight: FontWeight.w900),))
               ),
             ],
           ),

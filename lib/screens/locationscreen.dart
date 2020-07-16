@@ -19,6 +19,8 @@ class _LocationScreenState extends State<LocationScreen> {
   String displayText;
   int temp_min;
   int temp_max;
+  double temp_mn;
+  double temp_mx;
   String subtxt;
 
   String cityname;
@@ -39,8 +41,10 @@ class _LocationScreenState extends State<LocationScreen> {
       }
       double temp = weatherData['main']['temp'];
       temperature = temp.toInt();
-      temp_min = weatherData['main']['temp_min'].toInt();
-      temp_max = weatherData['main']['temp_max'].toInt();
+      temp_mn = weatherData['main']['temp_min'];
+      temp_min=temp_mn.toInt();
+      temp_mx = weatherData['main']['temp_max'];
+       temp_max=temp_mx.toInt();
       displayText = weather.getMessage(temperature);
 
       var condition = weatherData['weather'][0]['id'];
